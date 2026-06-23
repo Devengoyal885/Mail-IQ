@@ -7,7 +7,7 @@
   # Directory to publish (Vite default output)
   publish = "dist"
   # Node version
-  environment = { NODE_VERSION = "20" }
+  environment = { NODE_VERSION = "22" }
 
 # SPA redirect — send all routes to index.html for React Router
 [[redirects]]
