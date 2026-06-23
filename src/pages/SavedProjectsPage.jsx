@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
@@ -16,12 +16,7 @@ export default function SavedProjectsPage() {
     const [loading, setLoading] = useState(true);
     const [expanded, setExpanded] = useState(null);
 
-    useEffect(() => {
-        if (!user) return;
-        loadProjects();
-    }, [user]);
-
-    async function loadProjects() {
+    const loadProjects = useCallback(async () => {
         setLoading(true);
         try {
             const { data, error } = await supabase
@@ -50,7 +45,12 @@ export default function SavedProjectsPage() {
         } finally {
             setLoading(false);
         }
-    }
+    }, [user]);
+
+    useEffect(() => {
+        if (!user) return;
+        loadProjects();
+    }, [user, loadProjects]);
 
     async function handleDelete(id) {
         const { error } = await supabase.from('insights').delete().eq('id', id);

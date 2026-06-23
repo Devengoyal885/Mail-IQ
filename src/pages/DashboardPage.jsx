@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import {
     BarChart, Bar, LineChart, Line, ScatterChart, Scatter,
     XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -39,28 +39,13 @@ export default function DashboardPage() {
     const [vanishing, setVanishing] = useState(false);
 
     const insights = state?.insights;
-    if (!insights) {
-        navigate('/upload', { replace: true });
-        return null;
-    }
 
-    const { meta, columnStats, correlations, trendData, scatterData, topCorrelations, anomalies } = insights;
-    const colNames = Object.keys(columnStats);
+    // ── All hooks must be declared before any conditional returns ──────────────
 
-    // Bar chart data: mean per column
-    const barData = colNames.slice(0, 10).map((col) => ({
-        name: col.length > 14 ? col.slice(0, 14) + '…' : col,
-        Mean: columnStats[col].mean,
-        Max: columnStats[col].max,
-        StdDev: columnStats[col].stdDev,
-    }));
-
-    // Line chart from trendData
-    const primaryTrend = trendData[0];
-    const lineData = primaryTrend?.values.slice(0, 150) ?? [];
-
-    // ── Download PDF ──────────────────────────────────────────────────────────────────────────
+    // ── Download PDF ────────────────────────────────────────────────────────────
     const handleDownload = useCallback(async () => {
+        if (!insights) return;
+        const meta = insights.meta;
         const toastId = toast.loading('Generating PDF…');
         try {
             const target = dashRef.current;
@@ -90,8 +75,6 @@ export default function DashboardPage() {
                     doc.head.appendChild(styles);
                 },
             });
-
-            const imgData = canvas.toDataURL('image/png');
 
             // A4 landscape in mm: 297 x 210
             const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
@@ -137,11 +120,11 @@ export default function DashboardPage() {
             console.error('[PDF]', err);
             toast.error('PDF failed: ' + err.message, { id: toastId });
         }
-    }, [meta]);
+    }, [insights]);
 
-    // ── Save to Cloud ─────────────────────────────────────────────────────────────────────
+    // ── Save to Cloud ───────────────────────────────────────────────────────────
     const handleSaveCloud = useCallback(async () => {
-        if (!user) {
+        if (!insights || !user) {
             toast.error('You must be signed in to save to cloud.');
             return;
         }
@@ -184,10 +167,31 @@ export default function DashboardPage() {
         setVanishing(true);
         toast('🌪️ Erasing all local data…', { icon: '💨', duration: 1500 });
         setTimeout(() => {
-            // Clear all in-memory state by navigating away
             navigate('/upload', { replace: true, state: {} });
         }, 1600);
     }, [navigate]);
+
+    // ── Guard: redirect if no insights in route state ────────────────────────
+    useEffect(() => {
+        if (!insights) navigate('/upload', { replace: true });
+    }, [insights, navigate]);
+
+    if (!insights) return null;
+
+    const { meta, columnStats, trendData, scatterData, topCorrelations, anomalies } = insights;
+    const colNames = Object.keys(columnStats);
+
+    // Bar chart data: mean per column
+    const barData = colNames.slice(0, 10).map((col) => ({
+        name: col.length > 14 ? col.slice(0, 14) + '…' : col,
+        Mean: columnStats[col].mean,
+        Max: columnStats[col].max,
+        StdDev: columnStats[col].stdDev,
+    }));
+
+    // Line chart from trendData
+    const primaryTrend = trendData[0];
+    const lineData = primaryTrend?.values.slice(0, 150) ?? [];
 
     return (
         <div className={`dashboard-root ${vanishing ? 'vanishing' : ''}`}>
