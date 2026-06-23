@@ -27,9 +27,6 @@
 
   <br/><br/>
 
-  <!-- Hero Preview -->
-  > **🏆 Winner — Best AI Innovation, HackBLR 2024**
-  > Built by [@Devengoyal885](https://github.com/Devengoyal885) · Accepted into T-Hub Hyderabad
 
 </div>
 
@@ -575,13 +572,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 🏆 Recognition
 
-- 🥇 **Best AI Innovation** — HackBLR 2024 (₹1,50,000 + $5K AWS Credits)
-- 🚀 **T-Hub Hyderabad** — Incubation opportunity
-- 🎓 **Google Mentorship** — 3-month program with DeepMind engineers
-
----
 
 ## 📄 License
 
