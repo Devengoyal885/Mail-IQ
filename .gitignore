@@ -48,3 +48,6 @@ coverage
 
 # Misc
 *.pem
+
+# Tool metadata files
+*.metadata.json
