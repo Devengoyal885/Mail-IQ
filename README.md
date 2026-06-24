@@ -539,7 +539,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 📸 Screenshots
+## 📸 Screen Desription
 
 | View | Description |
 |------|-------------|
@@ -549,6 +549,53 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 | **Tasks** | Kanban board from email action items |
 | **Search** | Natural language search with filters |
 | **AI Chat** | Conversational inbox assistant |
+
+---
+## 🚀 Project Status & Repository Structure
+
+### Production Version (This Repository)
+
+This repository contains the **actual MailIQ source code**, architecture, backend integrations, AI workflows, and production-ready implementation currently under active development.
+
+MailIQ was designed as a real-world AI-powered email intelligence platform with features such as:
+
+* AI Email Categorization
+* Smart Priority Detection
+* Deadline & Action Item Extraction
+* Email Summarization
+* Unified Communication Intelligence
+* User Authentication & Personalization
+* Analytics Dashboard
+* Productivity Insights
+
+### Why Isn't It Publicly Deployed?
+
+Deploying MailIQ as a fully functional SaaS product requires ongoing infrastructure and operational costs, including:
+
+* AI Model API Usage
+* Authentication Services
+* Database Hosting
+* Email Processing Infrastructure
+* Cloud Storage
+* Monitoring & Security Services
+
+As a student-built project, maintaining these production services continuously is currently not financially feasible.
+
+### Demo Version
+
+To showcase the concept, design, workflow, and user experience of MailIQ, a separate demo prototype has been created.
+
+🔗 **Live Demo:** https://mailiq.netlify.app/
+
+🔗 **Demo Repository:** https://github.com/Devengoyal885/MailIQ-demo
+
+The demo illustrates the intended functionality and user interface but does not include all production integrations and paid infrastructure required for real-world deployment.
+
+### Future Roadmap
+
+The goal is to launch MailIQ as a fully hosted platform once sufficient resources, sponsorship, partnerships, or funding become available.
+
+Until then, this repository serves as the primary development repository containing the actual implementation and ongoing research behind the project.
 
 ---
 
